@@ -47,15 +47,15 @@ homeRouter.post("/users/homes", async (req, res) => {
   }
 });
 
-homeRouter.delete("/users/:googleId/homes/:id", async (req, res) => {
+// deleted googleId from params and body, worked to delete one home
+homeRouter.delete("/homes/:id", async (req, res) => {
   try {
-    const googleId: string = req.params.googleId;
     const _id: ObjectId = new ObjectId(req.params.id);
     const client = await getClient();
     const result = await client
       .db()
       .collection<Home>("homes")
-      .deleteOne({ googleId, _id });
+      .deleteOne({ _id });
     if (result.deletedCount) {
       res.sendStatus(204);
     } else {
