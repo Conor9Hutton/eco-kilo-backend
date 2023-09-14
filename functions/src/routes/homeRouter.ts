@@ -38,6 +38,7 @@ homeRouter.get("/users/:googleId/homes", async (req, res) => {
 homeRouter.post("/users/homes", async (req, res) => {
   try {
     const newHome: Home = req.body;
+    console.log(newHome);
     const client = await getClient();
     await client.db().collection<Home>("homes").insertOne(newHome);
     res.status(201).json(newHome);
