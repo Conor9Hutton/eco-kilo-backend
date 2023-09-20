@@ -66,17 +66,16 @@ homeRouter.delete("/homes/:id", async (req, res) => {
   }
 });
 
-homeRouter.put("/users/:googleId/homes/:id", async (req, res) => {
+homeRouter.put("/homes/:id", async (req, res) => {
   try {
     const updatedHome: Home = req.body;
     delete updatedHome._id;
-    const googleId: string = req.params.googleId;
     const _id: ObjectId = new ObjectId(req.params.id);
     const client = await getClient();
     const result = await client
       .db()
       .collection<Home>("homes")
-      .replaceOne({ googleId, _id }, updatedHome);
+      .replaceOne({ _id }, updatedHome);
     if (result.modifiedCount) {
       res.status(200).json(updatedHome);
     } else {
